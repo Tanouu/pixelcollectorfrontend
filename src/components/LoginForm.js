@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import AuthContext from '../AuthContext';
 
 const LoginForm = () => {
     const [user, setUser] = useState({
         username: '',
         password: '',
     });
+
+    const { setAuthToken } = useContext(AuthContext);
 
     const handleChange = (e) => {
         setUser({ ...user, [e.target.name]: e.target.value });
@@ -26,11 +29,12 @@ const LoginForm = () => {
                         throw new Error(`Erreur HTTP ! status: ${response.status}, message: ${text}`);
                     });
                 }
-                return response.text().then(text => text ? JSON.parse(text) : {});
+                return response.text();
             })
-            .then(data => {
-                console.log(data);
-                // Stockez les données de l'utilisateur dans l'état global ou dans le stockage local ici
+            .then(token => {
+                console.log(token);
+                // Stockez le token dans le contexte d'authentification
+                setAuthToken(token);
             })
             .catch(error => {
                 console.error("Il y a eu une erreur lors de la connexion de l'utilisateur", error);
