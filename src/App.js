@@ -6,6 +6,7 @@ import NFTList from './components/NFTList';
 import SearchBar from './components/SearchBar';
 import NFTDetail from './components/NFTDetail';
 import RegisterForm from "./components/RegisterForm";
+import LoginForm from "./components/LoginForm";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Routes>
           <Route path="/register" element={<RegisterForm />} />
           <Route path="/" element={<><NFTList /><NFTDetail /></>} />
+            <Route path="/login" element={<LoginForm />} />
         </Routes>
       </div>
     </Router>

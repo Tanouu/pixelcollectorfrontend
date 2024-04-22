@@ -7,7 +7,7 @@ function Header() {
             <h1>PIXEL COLLECTOR</h1>
             <nav>
                 <Link to="/register">Créer un compte</Link>
-                <button>Se connecter</button>
+                <Link to="/login">Se connecter</Link>
             </nav>
         </header>
     );

@@ -21,8 +21,7 @@ const RegisterForm = () => {
     };
 
     const handleSubmit = (e) => {
-        e.preventDefault();
-
+        //A changer quand on aura un vrai back
         fetch('http://localhost:8081/api/users/register', {
             method: 'POST',
             headers: {
