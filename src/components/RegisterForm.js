@@ -40,72 +40,111 @@ const RegisterForm = () => {
             })
             .then(data => {
                 console.log(data);
-                // Affichez un message de succès ou redirigez l'utilisateur
+                window.location.reload();
             })
             .catch(error => {
                 console.error("Il y a eu une erreur lors de l'enregistrement de l'utilisateur", error);
-                // Affichez un message d'erreur
             });
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input
-                name="username"
-                value={user.username}
-                onChange={handleChange}
-                placeholder="Nom d'utilisateur"
-                required
-            />
-            <input
-                name="email"
-                value={user.email}
-                onChange={handleChange}
-                placeholder="Email"
-                required
-            />
-            <input
-                name="password"
-                value={user.password}
-                onChange={handleChange}
-                placeholder="Mot de passe"
-                type="password"
-                required
-            />
-
-            <input
-                name="birthDate"
-                value={user.birthDate}
-                onChange={handleChange}
-                placeholder="Date de naissance"
-                type="date"
-                required
-            />
-            <input
-                name="walletAddress"
-                value={user.walletAddress}
-                onChange={handleChange}
-                placeholder="Adresse de portefeuille"
-                required
-            />
-            <label>
-                <input
-                    name="twoFactorAuthEnabled"
-                    type="checkbox"
-                    checked={user.twoFactorAuthEnabled}
-                    onChange={handleChange}
-                />
-                Authentification à deux facteurs
-            </label>
-            <input
-                name="photo"
-                value={user.photo}
-                onChange={handleChange}
-                placeholder="Photo de profil"
-                type="text"
-            />
-            <button type="submit">S'inscrire</button>
-        </form>
+        <form onSubmit={handleSubmit} className="container">
+            <div className="row mb-3">
+                <div className="col">
+                    <input
+                        className="form-control"
+                        name="username"
+                        value={user.username}
+                        onChange={handleChange}
+                        placeholder="Nom d'utilisateur"
+                        required
+                    />
+                </div>
+            </div>
+            <div className="row mb-3">
+                <div className="col">
+                    <input
+                        className="form-control"
+                        name="email"
+                        value={user.email}
+                        onChange={handleChange}
+                        placeholder="Email"
+                        required
+                    />
+                </div>
+            </div>
+            <div className="row mb-3">
+                <div className="col">
+                    <input
+                        className="form-control"
+                        name="password"
+                        value={user.password}
+                        onChange={handleChange}
+                        placeholder="Mot de passe"
+                        type="password"
+                        required
+                    />
+                </div>
+            </div>
+            <div className="row mb-3">
+                <div className="col">
+                    <input
+                        className="form-control"
+                        name="birthDate"
+                        value={user.birthDate}
+                        onChange={handleChange}
+                        placeholder="Date de naissance"
+                        type="date"
+                        required
+                    />
+                </div>
+            </div>
+            <div className="row mb-3">
+                <div className="col">
+                    <input
+                        className="form-control"
+                        name="walletAddress"
+                        value={user.walletAddress}
+                        onChange={handleChange}
+                        placeholder="Adresse de portefeuille"
+                        required
+                    />
+                </div>
+            </div>
+            <div className="row mb-3">
+                <div className="col">
+                    <div className="form-check">
+                        <input
+                            className="form-check-input"
+                            name="twoFactorAuthEnabled"
+                            type="checkbox"
+                            checked={user.twoFactorAuthEnabled}
+                            onChange={handleChange}
+                        />
+                        <label className="form-check-label">
+                            Authentification à deux facteurs
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div className="row mb-3">
+                <div className="col">
+                    <input
+                        className="form-control"
+                        name="photo"
+                        value={user.photo}
+                        onChange={handleChange}
+                        placeholder="Photo de profil"
+                        type="text"
+                    />
+                </div>
+            </div>
+            <div className="row">
+                    <div className="col">
+                        <button type="button" className="btn btn-primary" onClick={handleSubmit}>S'inscrire</button>
+                    </div>
+                </div>
+            </form>
     );
 };
 

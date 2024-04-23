@@ -43,23 +43,37 @@ const LoginForm = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input
-                name="username"
-                value={user.username}
-                onChange={handleChange}
-                placeholder="Nom d'utilisateur"
-                required
-            />
-            <input
-                name="password"
-                value={user.password}
-                onChange={handleChange}
-                placeholder="Mot de passe"
-                type="password"
-                required
-            />
-            <button type="submit">Se connecter</button>
+        <form onSubmit={handleSubmit} className="container">
+            <div className="row mb-3">
+                <div className="col">
+                    <input
+                        className="form-control"
+                        name="username"
+                        value={user.username}
+                        onChange={handleChange}
+                        placeholder="Nom d'utilisateur"
+                        required
+                    />
+                </div>
+            </div>
+            <div className="row mb-3">
+                <div className="col">
+                    <input
+                        className="form-control"
+                        name="password"
+                        value={user.password}
+                        onChange={handleChange}
+                        placeholder="Mot de passe"
+                        type="password"
+                        required
+                    />
+                </div>
+            </div>
+            <div className="row">
+                <div className="col">
+                    <button type="submit" className="btn btn-primary">Se connecter</button>
+                </div>
+            </div>
         </form>
     );
 };
