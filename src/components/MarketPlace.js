@@ -6,7 +6,7 @@ function Marketplace() {
 
     const fetchNFTs = async () => {
         try {
-            const response = await fetch('http://localhost:8081/api/sell/all');
+            const response = await fetch('http://34.155.148.4:8081/api/sell/all');
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }

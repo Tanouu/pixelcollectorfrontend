@@ -16,7 +16,7 @@ const LoginForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        fetch('http://localhost:8081/api/users/login', {
+        fetch('http://34.155.148.4:8081/api/users/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

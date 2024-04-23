@@ -22,7 +22,7 @@ const RegisterForm = () => {
 
     const handleSubmit = (e) => {
         //A changer quand on aura un vrai back
-        fetch('http://localhost:8081/api/users/register', {
+        fetch('http://34.155.148.4:8081/api/users/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
