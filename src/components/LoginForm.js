@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import AuthContext from '../AuthContext';
+import config from "../config";
 
 const LoginForm = () => {
     const [user, setUser] = useState({
@@ -7,7 +8,7 @@ const LoginForm = () => {
         password: '',
     });
 
-    const { setAuthToken } = useContext(AuthContext);
+    const { setAuthToken, setIsLoggedIn } = useContext(AuthContext);
 
     const handleChange = (e) => {
         setUser({ ...user, [e.target.name]: e.target.value });
@@ -16,7 +17,7 @@ const LoginForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        fetch('http://34.155.148.4:8081/api/users/login', {
+        fetch(`${config.backendUrl}/users/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -35,6 +36,7 @@ const LoginForm = () => {
                 console.log(token);
                 // Stockez le token dans le contexte d'authentification
                 setAuthToken(token);
+                setIsLoggedIn(true);
             })
             .catch(error => {
                 console.error("Il y a eu une erreur lors de la connexion de l'utilisateur", error);

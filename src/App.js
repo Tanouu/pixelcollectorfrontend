@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Header from './components/Header';
@@ -10,13 +10,13 @@ import Marketplace from "./components/MarketPlace";
 function App() {
 
   const [authToken, setAuthToken] = useState(null);
-
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Add this line
 
   return (
-      <AuthContext.Provider value={{authToken, setAuthToken}}>
+      <AuthContext.Provider value={{authToken, setAuthToken, isLoggedIn, setIsLoggedIn}}> {/* Add isLoggedIn and setIsLoggedIn here */}
     <Router>
       <div className="App">
-        <Header />
+        <Header key={isLoggedIn ? 'loggedIn' : 'loggedOut'} />
         <Marketplace />
         <Routes>
           <Route path="/register" element={<RegisterForm />} />

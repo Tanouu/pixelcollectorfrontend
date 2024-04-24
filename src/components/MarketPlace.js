@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import '../css/Marketplace.css'; // Assurez-vous d'avoir un fichier CSS avec ce nom.
+import config from '../config';
 
 function Marketplace() {
     const [nfts, setNfts] = useState([]);
 
     const fetchNFTs = async () => {
         try {
-            const response = await fetch('http://34.155.148.4:8081/api/sell/all');
+            const response = await fetch(`${config.backendUrl}/sell/all`);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
