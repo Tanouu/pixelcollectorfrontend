@@ -6,6 +6,7 @@ import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
 import { useContext } from 'react';
 import AuthContext from '../AuthContext';
+import {Link} from "react-router-dom";
 
 
 function Header() {
@@ -21,6 +22,7 @@ function Header() {
         // Mettez ici votre logique de déconnexion
         setAuthToken('');
         setIsLoggedIn(false);
+        // Redirigez l'utilisateur vers la page d'accueil
     };
 
     return (
@@ -35,10 +37,12 @@ function Header() {
                             <div className="d-flex justify-content-between">
                                 <Button variant="primary" className="me-2">Jouer</Button>
                                 <Button variant="primary" className="me-2">Enchères</Button>
-                                <Button variant="primary" className="me-2">MarketPlace</Button>
+                                <Link to="/">
+                                <Button variant="primary" className="me-2">MarketPlace</Button></Link>
                                 <Button variant="primary" className="me-2">Collection</Button>
-                                <Button variant="primary" className="me-2">Profil</Button>
-                                <Button variant="danger" onClick={handleLogout}>Se déconnecter</Button>
+                                <Link to="/profile"><Button variant="primary" className="me-2">Profil</Button></Link>
+                                <Link to="/">
+                                <Button variant="danger" onClick={handleLogout}>Se déconnecter</Button></Link>
                             </div>
                         ) : (
                             <div className="d-flex justify-content-end">

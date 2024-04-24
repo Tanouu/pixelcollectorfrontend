@@ -6,21 +6,24 @@ import RegisterForm from "./components/RegisterForm";
 import AuthContext   from "./AuthContext";
 import LoginForm from "./components/LoginForm";
 import Marketplace from "./components/MarketPlace";
+import Profile from "./components/Profile";
 
 function App() {
 
   const [authToken, setAuthToken] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Add this line
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userId, setUserId] = useState(null);
 
   return (
-      <AuthContext.Provider value={{authToken, setAuthToken, isLoggedIn, setIsLoggedIn}}> {/* Add isLoggedIn and setIsLoggedIn here */}
+      <AuthContext.Provider value={{authToken, setAuthToken, isLoggedIn, setIsLoggedIn, userId, setUserId}}>
     <Router>
       <div className="App">
         <Header key={isLoggedIn ? 'loggedIn' : 'loggedOut'} />
-        <Marketplace />
         <Routes>
+          <Route path="/" element={<Marketplace />} /> {/* Marketplace s'affiche sur la page d'accueil */}
+          <Route path="/profile" element={<Profile />} />
           <Route path="/register" element={<RegisterForm />} />
-            <Route path="/login" element={<LoginForm />} />
+          <Route path="/login" element={<LoginForm />} />
         </Routes>
       </div>
     </Router>

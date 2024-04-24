@@ -8,7 +8,7 @@ const LoginForm = () => {
         password: '',
     });
 
-    const { setAuthToken, setIsLoggedIn } = useContext(AuthContext);
+    const { setAuthToken, setIsLoggedIn, setUserId} = useContext(AuthContext);
 
     const handleChange = (e) => {
         setUser({ ...user, [e.target.name]: e.target.value });
@@ -30,20 +30,20 @@ const LoginForm = () => {
                         throw new Error(`Erreur HTTP ! status: ${response.status}, message: ${text}`);
                     });
                 }
-                return response.text();
+                return response.json(); // Parse the response to a JSON object
             })
-            .then(token => {
-                console.log(token);
-                // Stockez le token dans le contexte d'authentification
-                setAuthToken(token);
+            .then(data => {
+                console.log(data);
+                // Stockez le token et l'ID de l'utilisateur dans le contexte d'authentification
+                setAuthToken(data.jwt);
                 setIsLoggedIn(true);
+                setUserId(data.user.id);
             })
             .catch(error => {
                 console.error("Il y a eu une erreur lors de la connexion de l'utilisateur", error);
                 // Affichez un message d'erreur
             });
     };
-
     return (
         <form onSubmit={handleSubmit} className="container">
             <div className="row mb-3">
