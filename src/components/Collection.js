@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import AuthContext from '../AuthContext';
 import config from '../config';
+import { Link } from 'react-router-dom';
 
 function Collection() {
     const [nfts, setNfts] = useState([]);
@@ -27,13 +28,14 @@ function Collection() {
     }, [userId, authToken]);
 
     return (
-        <div className="container">
-            <div className="row">
-                <div className="col-md-6"> {/* Utilisez col-md-6 pour prendre la moitié de la largeur */}
-                    <div className="marketplace">
-                        <h2>Collection</h2>
-                        <div className="row">
-                            {nfts.map(nft => (
+    <div className="container">
+        <div className="row">
+            <div className="col-md-6">
+                <div className="marketplace">
+                    <h2>Collection</h2>
+                    <div className="row">
+                        {nfts.length > 0 ? (
+                            nfts.map(nft => (
                                 <div key={nft.id} className="col-lg-4 col-md-6 col-sm-12 mb-4">
                                     <div className="nft-card">
                                         <img src={`/assets/nft/${nft.photo}`} alt={`NFT ${nft.id}`} className="nft-image" />
@@ -43,12 +45,18 @@ function Collection() {
                                         </div>
                                     </div>
                                 </div>
-            ))}
-                        </div>
+                            ))
+                        ) : (
+                            <div>
+                                <p>Acheter un nft sur la marketplace pour commencer !</p>
+                                <Link to="/">Aller à la marketplace</Link>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     );
 }
 
