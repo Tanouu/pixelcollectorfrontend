@@ -7,6 +7,7 @@ import AuthContext   from "./AuthContext";
 import LoginForm from "./components/LoginForm";
 import Marketplace from "./components/MarketPlace";
 import Profile from "./components/Profile";
+import Collection from "./components/Collection";
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/register" element={<RegisterForm />} />
           <Route path="/login" element={<LoginForm />} />
+          <Route path="/collection" element={<Collection />} />
         </Routes>
       </div>
     </Router>

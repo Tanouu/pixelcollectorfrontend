@@ -39,7 +39,8 @@ function Header() {
                                 <Button variant="primary" className="me-2">Enchères</Button>
                                 <Link to="/">
                                 <Button variant="primary" className="me-2">MarketPlace</Button></Link>
-                                <Button variant="primary" className="me-2">Collection</Button>
+                                <Link to="/collection">
+                                    <Button variant="primary" className="me-2">Collection</Button></Link>
                                 <Link to="/profile"><Button variant="primary" className="me-2">Profil</Button></Link>
                                 <Link to="/">
                                 <Button variant="danger" onClick={handleLogout}>Se déconnecter</Button></Link>
