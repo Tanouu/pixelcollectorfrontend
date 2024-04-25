@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import AuthContext from '../AuthContext';
 import config from '../config';
+import '../css/Profile.css';
 
 function Profile() {
     const [user, setUser] = useState(null);
@@ -26,22 +27,24 @@ function Profile() {
                 }
             })
             .catch(error => console.error('Fetch error: ', error));
-    }, [authToken]);
+    }, [authToken, userId]);
 
     if (!user) {
         return <div>Loading...</div>;
     }
 
     return (
-        <div>
+        <div className="profile-card">
+            <img src={user.photo ? `/assets/nft/${user.photo}` : '/assets/nft/default-avatar.png'} alt="User"/>
             <h1>Profil</h1>
-            <p>Nom d'utilisateur: {user.username}</p>
-            <p>Email: {user.email}</p>
-            <p>Date de naissance: {user.birthDate}</p>
+            <p className="highlight">Nom d'utilisateur: {user.username}</p>
+            <p className="highlight">Email: {user.email}</p>
+            <p>Date de naissance: {new Date(user.birthDate).toLocaleDateString()}</p>
             <p>Adresse du portefeuille: {user.walletAddress}</p>
             <p>Authentification à deux facteurs activée: {user.twoFactorAuthEnabled ? 'Oui' : 'Non'}</p>
-            <p>Photo: {user.photo}</p>
         </div>
+
+
     );
 }
 

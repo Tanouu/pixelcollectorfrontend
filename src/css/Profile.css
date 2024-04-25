@@ -1,0 +1,44 @@
+.profile-card {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    max-width: 500px; /* Ajustement de la largeur si nécessaire */
+    margin: 40px auto; /* Augmentation de la marge en haut pour baisser la carte */
+    padding: 20px;
+    border-radius: 10px;
+    background: #fff;
+    text-align: center;
+    position: relative;
+    border: 2px solid #333; /* Ajout d'une bordure */
+}
+
+.profile-card h1 {
+    margin-top: 10px;
+    font-size: 24px; /* Augmentation de la taille de la police */
+    color: #333; /* Couleur du texte pour le titre */
+}
+
+.profile-card p {
+    color: #555; /* Assombrir un peu la couleur du texte pour une meilleure lecture */
+    font-size: 16px; /* Augmentation de la taille de la police */
+    line-height: 1.5; /* Espace entre les lignes pour une meilleure lecture */
+    margin: 10px 0; /* Ajustement des marges pour les paragraphes */
+}
+
+/* Ajout si vous voulez mettre en valeur l'email ou le nom d'utilisateur */
+.profile-card p.highlight {
+    font-weight: bold;
+    color: #000;
+}
+
+
+.profile-card img {
+    max-width: 100px;
+    height: auto;
+    border-radius: 50%;
+    border: 2px solid black;
+}
+
+
+.profile-card p.two-factor {
+    font-weight: bold;
+    color: #333;
+}

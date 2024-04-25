@@ -127,18 +127,6 @@ const RegisterForm = () => {
                     </div>
                 </div>
             </div>
-            <div className="row mb-3">
-                <div className="col">
-                    <input
-                        className="form-control"
-                        name="photo"
-                        value={user.photo}
-                        onChange={handleChange}
-                        placeholder="Photo de profil"
-                        type="text"
-                    />
-                </div>
-            </div>
             <div className="row">
                     <div className="col">
                         <button type="button" className="btn btn-primary" onClick={handleSubmit}>S'inscrire</button>
