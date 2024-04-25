@@ -1,18 +1,55 @@
-import React from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { useParams, Redirect } from 'react-router-dom';
+import config from '../config';
+import AuthContext from '../AuthContext';
 
-function NFTDetail() {
-    // Simulez un NFT sélectionné ou passez-le en props
-    const selectedNFT = { name: "NFT 8", rarity: "Peu Commun", price: 90 };
+function NFTDetails() {
+    const [nft, setNft] = useState(null);
+    const { id } = useParams();
+    const { authToken, userId } = useContext(AuthContext);
+
+    useEffect(() => {
+        if (!authToken || !userId) {
+            return;
+        }
+
+        fetch(`${config.backendUrl}/nft/${id}`, {
+            headers: {
+                'Authorization': `Bearer ${authToken}`
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                setNft(data);
+            })
+            .catch(error => {
+                console.error('There was a problem fetching the NFT:', error);
+            });
+    }, [id, authToken, userId]);
+
+    if (!authToken || !userId) {
+        return <Redirect to="/login" />;
+    }
+
+    if (!nft) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <div>
-            <h3>Détails</h3>
-            <div>Nom : {selectedNFT.name}</div>
-            <div>Rareté : {selectedNFT.rarity}</div>
-            <div>Prix : {selectedNFT.price}</div>
-            {/* Ajoutez ici d'autres détails */}
+            <h2>NFT Details</h2>
+            <p>Rarity: {nft.rarity}</p>
+            <img src={`/assets/nft/${nft.photo}`} alt={`NFT ${nft.id}`} />
+            <p>Owner: {nft.owner.username}</p>
+            <button>Mettre en vente</button>
+            <button>Mettre en enchère</button>
         </div>
     );
 }
 
-export default NFTDetail;
+export default NFTDetails;
