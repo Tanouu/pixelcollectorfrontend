@@ -3,11 +3,14 @@ import AuthContext from '../AuthContext';
 import config from '../config';
 import '../css/Collection.css';
 import Button from "react-bootstrap/Button";
+import SellNFT from "./SellNft";
+
 
 function Collection() {
     const [nfts, setNfts] = useState([]);
     const [selectedNft, setSelectedNft] = useState(null);
     const { authToken, userId } = useContext(AuthContext);
+    const [showSellForm, setShowSellForm] = useState(false);
 
     useEffect(() => {
         fetch(`${config.backendUrl}/nft/user/${userId}`, {
@@ -31,6 +34,9 @@ function Collection() {
 
     const handleNftClick = (nft) => {
         setSelectedNft(nft);
+    };
+    const handleSellClick = () => {
+        setShowSellForm(true); // Afficher le formulaire lorsque le bouton est cliqué
     };
 
     return (
@@ -71,10 +77,10 @@ function Collection() {
                                 <p>Owner: {selectedNft.owner.username}</p>
                             </div>
                           <div className="d-flex justify-content-between">
-                                <Button variant="primary" className="me-2">Mettre en vente</Button>
+                              <Button variant="primary" className="me-2" onClick={handleSellClick}>Mettre en vente</Button>
                                 <Button variant="primary" className="me-2">Mettre en enchère</Button>
                             </div>
-                        </div>
+                            {showSellForm && <SellNFT selectedNftId={selectedNft.id} setShowSellForm={setShowSellForm} />}                        </div>
                     </div>
                 )}
             </div>
