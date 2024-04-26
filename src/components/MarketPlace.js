@@ -1,14 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import '../css/Marketplace.css'; // Assurez-vous d'avoir un fichier CSS avec ce nom.
 import config from '../config';
 import Button from "react-bootstrap/Button";
 import AuthContext from "../AuthContext";
+import {buyNFT} from "./BuyNFT";
 
 function Marketplace() {
     const [nfts, setNfts] = useState([]);
     const [selectedNft, setSelectedNft] = useState(null);
     const {isLoggedIn} = React.useContext(AuthContext);
+    const{authToken, userId} = useContext(AuthContext);
 
+    const handleBuy = async (nftId, saleId) => {
+        try {
+            await buyNFT(nftId, userId, saleId, authToken, nfts); // Appellez la fonction buyNFT avec les ID appropriés et le token d'authentification
+            fetchNFTs(); // Rechargez les NFTs après l'achat
+        } catch (error) {
+            console.error('Erreur lors de l\'achat du NFT:', error);
+        }
+    };
 
     const fetchNFTs = async () => {
         try {
@@ -59,7 +69,7 @@ function Marketplace() {
                     <div className="col-md-6">
                         <div className="nft-card nft-card-large">
                             <h2>NFT {selectedNft.nft.id}</h2>
-                            <img src={`/assets/nft/${selectedNft.nft.photo}`} alt={`NFT ${selectedNft.nft.id}`} className="nft-image" />
+                            <img src={`/assets/nft/${selectedNft.nft.photo}`} alt={`NFT ${selectedNft.id}`} className="nft-image" />
                             <div className="nft-info">
                                 <p>Rareté: {selectedNft.nft.rarity}</p>
                                 <p>Prix: {selectedNft.prix} €</p>
@@ -68,7 +78,7 @@ function Marketplace() {
                             </div>
                             {isLoggedIn && (
                                 <div className="d-flex justify-content-between">
-                                    <Button variant="primary" className="me-2">Acheter</Button>
+                                    <Button variant="primary" className="me-2" onClick={() => handleBuy(selectedNft.nft.id, selectedNft.id)}>Acheter</Button>
                                 </div>
                             )}
                         </div>

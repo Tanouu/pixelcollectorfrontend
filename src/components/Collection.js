@@ -32,6 +32,7 @@ function Collection() {
             });
     }, [userId, authToken]);
 
+
     const handleNftClick = (nft) => {
         setSelectedNft(nft);
     };

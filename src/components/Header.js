@@ -1,75 +1,68 @@
 import React, { useState, useRef } from 'react';
 import logo from '../asset/Logo.png';
-import Button from 'react-bootstrap/Button';
+import { Navbar, Nav, Button, Container } from 'react-bootstrap';
 import Overlay from 'react-bootstrap/Overlay';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
 import { useContext } from 'react';
 import AuthContext from '../AuthContext';
-import {Link} from "react-router-dom";
-
+import { Link } from "react-router-dom";
 
 function Header() {
     const [showLogin, setShowLogin] = useState(false);
     const [showRegister, setShowRegister] = useState(false);
     const targetLogin = useRef(null);
     const targetRegister = useRef(null);
-    const {setAuthToken, isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+    const { setAuthToken, isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
 
-
-    // Fonction pour gérer la déconnexion de l'utilisateur
     const handleLogout = () => {
-        // Mettez ici votre logique de déconnexion
         setAuthToken('');
         setIsLoggedIn(false);
-        // Redirigez l'utilisateur vers la page d'accueil
     };
 
     return (
-        <header className="bg-dark text-white py-3">
-            <div className="container">
-                <div className="row align-items-center">
-                    <div className="col-md-6">
-                        <img src={logo} alt="Pixel Collector Logo" className="header-logo img-fluid" style={{maxWidth: "150px"}} />
-                    </div>
-                    <div className="col-md-6">
+        <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+            <Container fluid>
+                <Navbar.Brand href="#home">
+                    <img src={logo} alt="Pixel Collector Logo" className="header-logo" style={{ maxWidth: "150px" }} />
+                </Navbar.Brand>
+                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                <Navbar.Collapse id="responsive-navbar-nav">
+                    <Nav className="ms-auto">
                         {isLoggedIn ? (
-                            <div className="d-flex justify-content-between">
-                                <Button variant="primary" className="me-2">Jouer</Button>
-                                <Button variant="primary" className="me-2">Enchères</Button>
-                                <Link to="/">
-                                <Button variant="primary" className="me-2">MarketPlace</Button></Link>
-                                <Link to="/collection">
-                                    <Button variant="primary" className="me-2">Collection</Button></Link>
-                                <Link to="/profile"><Button variant="primary" className="me-2">Profil</Button></Link>
-                                <Link to="/">
-                                <Button variant="danger" onClick={handleLogout}>Se déconnecter</Button></Link>
-                            </div>
+                            <>
+                                <Nav.Link>Jouer</Nav.Link>
+                                <Nav.Link>Enchères</Nav.Link>
+                                <Nav.Link as={Link} to="/">MarketPlace</Nav.Link>
+                                <Nav.Link as={Link} to="/collection">Collection</Nav.Link>
+                                <Nav.Link as={Link} to="/profile">Profil</Nav.Link>
+                                <Button variant="danger" onClick={handleLogout}>Se déconnecter</Button>
+                            </>
                         ) : (
-                            <div className="d-flex justify-content-end">
-                                <Button variant="success" ref={targetRegister} onClick={() => setShowRegister(!showRegister)}>
+                            <>
+                                <Nav.Link ref={targetRegister} onClick={() => setShowRegister(!showRegister)}>
                                     Créer un compte
-                                </Button>
+                                </Nav.Link>
                                 <Overlay target={targetRegister.current} show={showRegister} placement="bottom" rootClose={true} onHide={() => setShowRegister(false)}>
                                     <div style={{ backgroundColor: 'white', padding: '10px', borderRadius: '3px', boxShadow: '0 8px 16px rgba(0,0,0,.15)' }}>
                                         <RegisterForm />
                                     </div>
                                 </Overlay>
 
-                                <Button variant="primary" ref={targetLogin} onClick={() => setShowLogin(!showLogin)} className="ms-2">
+                                <Nav.Link ref={targetLogin} onClick={() => setShowLogin(!showLogin)}>
                                     Se connecter
-                                </Button>
+                                </Nav.Link>
                                 <Overlay target={targetLogin.current} show={showLogin} placement="bottom" rootClose={true} onHide={() => setShowLogin(false)}>
                                     <div style={{ backgroundColor: 'white', padding: '10px', borderRadius: '3px', boxShadow: '0 8px 16px rgba(0,0,0,.15)' }}>
                                         <LoginForm />
                                     </div>
                                 </Overlay>
-                            </div>
+                            </>
                         )}
-                    </div>
-                </div>
-            </div>
-        </header>
+                    </Nav>
+                </Navbar.Collapse>
+            </Container>
+        </Navbar>
     );
 }
 

@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import config from "../config";
+import AuthContext from "../AuthContext";
 
 function SellNFT({ selectedNftId, setShowSellForm }) {
     const currentDate = new Date();
@@ -14,6 +15,7 @@ function SellNFT({ selectedNftId, setShowSellForm }) {
     const [saleDate] = useState(formattedDate);
     const [buyDate, setBuyDate] = useState('');
     const [show, setShow] = useState(false);
+    const{authToken} = useContext(AuthContext);
     const handleClose = () => {
         setShow(false);
         setShowSellForm(false);
@@ -49,6 +51,7 @@ function SellNFT({ selectedNftId, setShowSellForm }) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${authToken}`
             },
             body: JSON.stringify(data),
         });
