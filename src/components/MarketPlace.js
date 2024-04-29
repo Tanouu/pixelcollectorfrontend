@@ -57,7 +57,7 @@ function Marketplace() {
                                         <div className="nft-info">
                                             <h5>NFT {item.nft.id}</h5>
                                             <p>Rareté: {item.nft.rarity}</p>
-                                            <p>Prix: {item.prix} €</p>
+                                            <p>Prix: {item.prix} Matic</p>
                                         </div>
                                     </div>
                                 </div>

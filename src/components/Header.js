@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import logo from '../asset/Logo.png';
 import { Navbar, Nav, Button, Container } from 'react-bootstrap';
 import Overlay from 'react-bootstrap/Overlay';
@@ -7,17 +7,70 @@ import RegisterForm from './RegisterForm';
 import { useContext } from 'react';
 import AuthContext from '../AuthContext';
 import { Link } from "react-router-dom";
+import Web3 from 'web3';
+import config from '../config';
 
 function Header() {
     const [showLogin, setShowLogin] = useState(false);
     const [showRegister, setShowRegister] = useState(false);
     const targetLogin = useRef(null);
     const targetRegister = useRef(null);
-    const { setAuthToken, isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+    const { setAuthToken, isLoggedIn, setIsLoggedIn, userId, authToken } = useContext(AuthContext);
+    const [web3, setWeb3] = useState(null);
+    const [account, setAccount] = useState(null);
+    const [balance, setBalance] = useState(null);
+
+
+    useEffect(() => {
+        if (window.ethereum) {
+            const web3Instance = new Web3(window.ethereum);
+            setWeb3(web3Instance);
+        } else {
+            alert("Please install MetaMask to use this feature.");
+        }
+    }, []);
+
+    const handleConnectWallet = async () => {
+        try {
+            const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+            setAccount(accounts[0]);
+            updateBalance(accounts[0]);
+
+            // Mettre à jour le wallet de l'utilisateur dans la base de données
+            const response = await fetch(`${config.backendUrl}/users/${userId}/wallet`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${authToken}`
+                },
+                body: JSON.stringify(accounts[0]) // Assurez-vous que votre API accepte le nouveau wallet dans le corps de la requête
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to update wallet');
+            }
+
+            const updatedWallet = await response.text(); // Utiliser response.text() si l'API renvoie une chaîne de caractères
+            setAccount(JSON.parse(updatedWallet));
+
+        } catch (error) {
+            console.error("Error connecting to MetaMask", error);
+        }
+    };
+
+    const updateBalance = async (account) => {
+        if (web3) {
+            const balanceWei = await web3.eth.getBalance(account);
+            const balanceEth = web3.utils.fromWei(balanceWei, 'ether');
+            setBalance(parseFloat(balanceEth).toFixed(7));
+        }
+    };
 
     const handleLogout = () => {
         setAuthToken('');
         setIsLoggedIn(false);
+        window.location.href = '/';
+        localStorage.clear();
     };
 
     return (
@@ -36,7 +89,15 @@ function Header() {
                                 <Nav.Link as={Link} to="/">MarketPlace</Nav.Link>
                                 <Nav.Link as={Link} to="/collection">Collection</Nav.Link>
                                 <Nav.Link as={Link} to="/profile">Profil</Nav.Link>
-                                <Button variant="danger" onClick={handleLogout}>Se déconnecter</Button>
+                                {account && (
+                                    <Nav.Link className="ms-2 text-light">
+                                        Balance: {balance} Matic
+                                    </Nav.Link>
+                                )}
+                                <Button variant="danger" className="me-2" onClick={handleLogout}>Se déconnecter</Button>
+                                <Button variant="primary" onClick={handleConnectWallet}>
+                                    {account ? `Wallet : ${account.substring(0, 6)}...${account.substring(account.length - 4)}` : 'Connect Wallet'}
+                                </Button>
                             </>
                         ) : (
                             <>

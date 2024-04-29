@@ -9,8 +9,13 @@ const RegisterForm = () => {
         birthDate: '',
         walletAddress: '',
         twoFactorAuthEnabled: false,
-        photo: '',
+        photo: 'Rare2.png',
     });
+
+    const [emailError, setEmailError] = useState(false);
+    const [birthDateError, setBirthDateError] = useState(false);
+    const [birthDateTooOldError, setBirthDateTooOldError] = useState(false);
+    const [registrationSuccess, setRegistrationSuccess] = useState(false);
 
     const handleChange = (e) => {
         if (e.target.type === 'checkbox') {
@@ -19,9 +24,56 @@ const RegisterForm = () => {
         }
         setUser({ ...user, [e.target.name]: e.target.value });
 
+        // Réinitialisez birthDateTooOldError à false chaque fois que l'utilisateur change la date de naissance
+        if (e.target.name === 'birthDate') {
+            setBirthDateTooOldError(false);
+        }
     };
 
+    function validateEmail(email) {
+        var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@(([[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase());
+    }
+
+    function validateBirthDate(birthDate) {
+    const birthDateObj = new Date(birthDate);
+    const currentDate = new Date();
+    let age = currentDate.getFullYear() - birthDateObj.getFullYear();
+    const m = currentDate.getMonth() - birthDateObj.getMonth();
+    if (m < 0 || (m === 0 && currentDate.getDate() < birthDateObj.getDate())) {
+        age--;
+    }
+    // Vérifie si l'utilisateur a au moins 18 ans
+    if (age < 18) {
+        setBirthDateError(true);
+        return false;
+    }
+    // Vérifie si la date de naissance est plus récente que l'année 1900
+    if (birthDateObj.getFullYear() < 1900) {
+        setBirthDateTooOldError(true);
+        return false;
+    }
+    setBirthDateError(false);
+    setBirthDateTooOldError(false);
+    return true;
+}
+
     const handleSubmit = (e) => {
+        e.preventDefault();
+
+        if (!validateEmail(user.email)) {
+            setEmailError(true);
+            return;
+        }
+
+        if (!validateBirthDate(user.birthDate)) {
+            setBirthDateError(true);
+            return;
+        }
+
+        setEmailError(false);
+        setBirthDateError(false);
+
         fetch(`${config.backendUrl}/users/register`, {
             method: 'POST',
             headers: {
@@ -31,7 +83,6 @@ const RegisterForm = () => {
         })
             .then(response => {
                 if (!response.ok) {
-                    // Log the server's error message
                     return response.text().then(text => {
                         throw new Error(`Erreur HTTP ! status: ${response.status}, message: ${text}`);
                     });
@@ -40,7 +91,7 @@ const RegisterForm = () => {
             })
             .then(data => {
                 console.log(data);
-                window.location.reload();
+                setRegistrationSuccess(true);
             })
             .catch(error => {
                 console.error("Il y a eu une erreur lors de l'enregistrement de l'utilisateur", error);
@@ -63,14 +114,20 @@ const RegisterForm = () => {
             </div>
             <div className="row mb-3">
                 <div className="col">
-                    <input
-                        className="form-control"
-                        name="email"
-                        value={user.email}
-                        onChange={handleChange}
-                        placeholder="Email"
-                        required
-                    />
+                    <div className={`form-group ${emailError ? 'has-danger' : ''}`}>
+                        <input
+                            className={`form-control ${emailError ? 'is-invalid' : ''}`}
+                            name="email"
+                            value={user.email}
+                            onChange={handleChange}
+                            placeholder="Email"
+                            type="email"
+                            required
+                        />
+                        {emailError && <div className="invalid-feedback">
+                            Veuillez entrer une adresse email valide.
+                        </div>}
+                    </div>
                 </div>
             </div>
             <div className="row mb-3">
@@ -88,15 +145,24 @@ const RegisterForm = () => {
             </div>
             <div className="row mb-3">
                 <div className="col">
-                    <input
-                        className="form-control"
-                        name="birthDate"
-                        value={user.birthDate}
-                        onChange={handleChange}
-                        placeholder="Date de naissance"
-                        type="date"
-                        required
-                    />
+                    <div
+                        className={`form-group ${birthDateError ? 'has-danger' : ''} ${birthDateTooOldError ? 'has-danger' : ''}`}>
+                        <input
+                            className={`form-control ${birthDateError ? 'is-invalid' : ''} ${birthDateTooOldError ? 'is-invalid' : ''}`}
+                            name="birthDate"
+                            value={user.birthDate}
+                            onChange={handleChange}
+                            placeholder="Date de naissance"
+                            type="date"
+                            required
+                        />
+                        {birthDateTooOldError && <div className="invalid-feedback d-block">
+                            Entrer une date de naissance valide.
+                        </div>}
+                        {!birthDateTooOldError && birthDateError && <div className="invalid-feedback d-block">
+                            Vous devez avoir au moins 18 ans.
+                        </div>}
+                    </div>
                 </div>
             </div>
             <div className="row mb-3">
@@ -128,11 +194,12 @@ const RegisterForm = () => {
                 </div>
             </div>
             <div className="row">
-                    <div className="col">
-                        <button type="button" className="btn btn-primary" onClick={handleSubmit}>S'inscrire</button>
-                    </div>
+                <div className="col">
+                    <button type="button" className="btn btn-primary" onClick={handleSubmit}>S'inscrire</button>
+                    {registrationSuccess && <span style={{marginLeft: '10px'}} className="text-success">Inscription réussie !</span>}
                 </div>
-            </form>
+            </div>
+        </form>
     );
 };
 
