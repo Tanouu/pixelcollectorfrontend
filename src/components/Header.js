@@ -9,6 +9,7 @@ import AuthContext from '../AuthContext';
 import { Link } from "react-router-dom";
 import Web3 from 'web3';
 import config from '../config';
+import '../css/Header.css';
 
 function Header() {
     const [showLogin, setShowLogin] = useState(false);
@@ -79,29 +80,31 @@ function Header() {
                 <Navbar.Brand href="#home">
                     <img src={logo} alt="Pixel Collector Logo" className="header-logo" style={{ maxWidth: "150px" }} />
                 </Navbar.Brand>
+                {account && (
+                    <Nav.Link className="ms-2 text-light">
+                        Balance: {balance} Matic
+                    </Nav.Link>
+                )}
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="ms-auto">
                         {isLoggedIn ? (
                             <>
-                                <Nav.Link>Jouer</Nav.Link>
-                                <Nav.Link>Enchères</Nav.Link>
-                                <Nav.Link as={Link} to="/">MarketPlace</Nav.Link>
-                                <Nav.Link as={Link} to="/collection">Collection</Nav.Link>
-                                <Nav.Link as={Link} to="/profile">Profil</Nav.Link>
-                                {account && (
-                                    <Nav.Link className="ms-2 text-light">
-                                        Balance: {balance} Matic
-                                    </Nav.Link>
-                                )}
-                                <Button variant="danger" className="me-2" onClick={handleLogout}>Se déconnecter</Button>
+                                <Nav.Link className="nav-link-hover">Jouer</Nav.Link>
+                                <Nav.Link className="nav-link-hover">Enchères</Nav.Link>
+                                <Nav.Link as={Link} to="/" className="nav-link-hover">MarketPlace</Nav.Link>
+                                <Nav.Link as={Link} to="/collection" className="nav-link-hover">Collection</Nav.Link>
+                                <Nav.Link as={Link} to="/profile" className="nav-link-hover">Profil</Nav.Link>
+                                <Nav.Link onClick={handleLogout} className="nav-link-hover">
+                                    Se déconnecter
+                                </Nav.Link>
                                 <Button variant="primary" onClick={handleConnectWallet}>
                                     {account ? `Wallet : ${account.substring(0, 6)}...${account.substring(account.length - 4)}` : 'Connect Wallet'}
                                 </Button>
                             </>
                         ) : (
                             <>
-                                <Nav.Link ref={targetRegister} onClick={() => setShowRegister(!showRegister)}>
+                                <Nav.Link ref={targetRegister} onClick={() => setShowRegister(!showRegister)} className="nav-link-hover">
                                     Créer un compte
                                 </Nav.Link>
                                 <Overlay target={targetRegister.current} show={showRegister} placement="bottom" rootClose={true} onHide={() => setShowRegister(false)}>
@@ -110,7 +113,7 @@ function Header() {
                                     </div>
                                 </Overlay>
 
-                                <Nav.Link ref={targetLogin} onClick={() => setShowLogin(!showLogin)}>
+                                <Nav.Link ref={targetLogin} onClick={() => setShowLogin(!showLogin)} className="nav-link-hover">
                                     Se connecter
                                 </Nav.Link>
                                 <Overlay target={targetLogin.current} show={showLogin} placement="bottom" rootClose={true} onHide={() => setShowLogin(false)}>

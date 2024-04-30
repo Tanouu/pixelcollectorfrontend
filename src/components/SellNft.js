@@ -68,32 +68,29 @@ function SellNFT({ selectedNftId, setShowSellForm }) {
 
     return (
         <>
-            <Modal show={show} onHide={handleClose}>
+            <Modal show={show} onHide={handleClose} className="login-modal">
                 <Modal.Header closeButton>
                     <Modal.Title>Vendre NFT</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <form onSubmit={handleSubmit}>
-                        <input type="hidden" value={nftId} />
-                        <label>
-                            Price:
-                            <input type="text" value={price} onChange={e => setPrice(e.target.value)}/>
-                        </label>
-                        <label>
-                            Sale Date:
-                            <input type="date" value={saleDate} readOnly/>
-                        </label>
-                        <label>
-                            Buy Date:
-                            <input type="date" value={buyDate} onChange={e => setBuyDate(e.target.value)}/>
-                        </label>
+                    <form onSubmit={handleSubmit} className="login-form">
+                        <input type="hidden" value={nftId}/>
+                        <div className="form-group">
+                            <label>
+                                Price:
+                                <input type="text" value={price} onChange={e => setPrice(e.target.value)}
+                                       className="form-control"/>
+                            </label>
+                        </div>
+                        <input type="hidden" value={saleDate}/>
+                        <input type="hidden" value={buyDate} onChange={e => setBuyDate(e.target.value)}/>
                     </form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
+                    <Button variant="secondary" onClick={handleClose} className="btn-custom">
                         Fermer
                     </Button>
-                    <Button variant="primary" onClick={handleSubmit}>
+                    <Button variant="primary" onClick={handleSubmit} className="btn-custom">
                         Vendre
                     </Button>
                 </Modal.Footer>

@@ -1,0 +1,8 @@
+.nav-link-hover:hover {
+    color: #02ffff; /* Changer la couleur du texte */
+}
+
+.nav-link-hover:active, .nav-link-hover:focus {
+    color: #c002ff; /* Changer la couleur du texte */
+    outline: none; /* Supprimer l'outline par défaut */
+}
