@@ -30,7 +30,7 @@
 }
 
 
-.profile-card img {
+.profile-picture {
     max-width: 100px;
     height: auto;
     border-radius: 50%;
@@ -41,4 +41,13 @@
 .profile-card p.two-factor {
     font-weight: bold;
     color: #333;
+}
+
+.qr-code {
+    display: block;
+    max-width: 200px;
+    height: auto;
+    margin: 20px auto;
+    border: 1px solid #000;
+    padding: 10px;
 }

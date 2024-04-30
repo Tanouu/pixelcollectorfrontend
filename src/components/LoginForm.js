@@ -6,6 +6,7 @@ const LoginForm = () => {
     const [user, setUser] = useState({
         username: '',
         password: '',
+        totp: '',
     });
 
     const { setAuthToken, setIsLoggedIn, setUserId} = useContext(AuthContext);
@@ -27,6 +28,7 @@ const LoginForm = () => {
             .then(response => {
                 if (!response.ok) {
                     return response.text().then(text => {
+                        console.log(user.totp);
                         throw new Error(`Erreur HTTP ! status: ${response.status}, message: ${text}`);
                     });
                 }
@@ -68,6 +70,17 @@ const LoginForm = () => {
                         placeholder="Mot de passe"
                         type="password"
                         required
+                    />
+                </div>
+            </div>
+            <div className="row mb-3">
+                <div className="col">
+                    <input
+                        className="form-control"
+                        name="totp"
+                        value={user.totp}
+                        onChange={handleChange}
+                        placeholder="Code d'authentification"
                     />
                 </div>
             </div>

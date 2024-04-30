@@ -72,7 +72,7 @@ function Marketplace() {
                             <img src={`/assets/nft/${selectedNft.nft.photo}`} alt={`NFT ${selectedNft.id}`} className="nft-image" />
                             <div className="nft-info">
                                 <p>Rareté: {selectedNft.nft.rarity}</p>
-                                <p>Prix: {selectedNft.prix} €</p>
+                                <p>Prix: {selectedNft.prix} Matic</p>
                                 <p>Owner: {selectedNft.nft.owner.username}</p>
 
                             </div>
