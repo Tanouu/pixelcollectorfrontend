@@ -77,7 +77,7 @@ function Header() {
     return (
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
             <Container fluid>
-                <Navbar.Brand href="#home">
+                <Navbar.Brand href="/">
                     <img src={logo} alt="Pixel Collector Logo" className="header-logo" style={{ maxWidth: "150px" }} />
                 </Navbar.Brand>
                 {account && (
@@ -90,7 +90,7 @@ function Header() {
                     <Nav className="ms-auto">
                         {isLoggedIn ? (
                             <>
-                                <Nav.Link className="nav-link-hover">Jouer</Nav.Link>
+                                <Nav.Link as={Link} to="/game" className="nav-link-hover">Jeu</Nav.Link>
                                 <Nav.Link className="nav-link-hover">Enchères</Nav.Link>
                                 <Nav.Link as={Link} to="/" className="nav-link-hover">MarketPlace</Nav.Link>
                                 <Nav.Link as={Link} to="/collection" className="nav-link-hover">Collection</Nav.Link>
