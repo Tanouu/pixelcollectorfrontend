@@ -51,7 +51,7 @@
 }
 
 .nft-card-large:hover {
-    transform: none
+    transform: none !important;
 }
 
 .nft-card-large .nft-image {

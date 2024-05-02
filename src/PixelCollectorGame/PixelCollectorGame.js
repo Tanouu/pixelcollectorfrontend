@@ -18,6 +18,37 @@ import {
 
 import KeyHandler, { KEYDOWN } from 'react-key-handler';
 
+const buttonStyle = {
+  padding: '10px 20px',
+  margin: '10px',
+  fontSize: '18px',
+  borderRadius: '5px',
+  backgroundColor: '#4CAF50', /* Green */
+  border: 'none',
+  color: 'white',
+  textAlign: 'center',
+  textDecoration: 'none',
+  display: 'inline-block',
+  transitionDuration: '0.4s',
+  cursor: 'pointer'
+};
+
+const appStyle = {
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  height: '100vh',
+};
+
+const buttonContainerStyle = {
+  display: 'flex',
+  justifyContent: 'space-between',
+  width: '50%',
+  marginTop: '20px',
+};
+
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -41,7 +72,7 @@ class App extends Component {
   }
   render() {
     return (
-      <div className="App">
+      <div className="App" style={appStyle}>
         <KeyHandler keyEventName={KEYDOWN} keyValue="ArrowDown" onKeyHandle={this.moveDown} />
         <KeyHandler keyEventName={KEYDOWN} keyValue="ArrowLeft" onKeyHandle={this.moveLeft} />
         <KeyHandler keyEventName={KEYDOWN} keyValue="ArrowRight" onKeyHandle={this.moveRight} />
@@ -57,6 +88,13 @@ class App extends Component {
             <kbd>&uarr;</kbd> <kbd>R</kbd> rotate block<br />
             <kbd>Space Bar</kbd> drop block<br />
             <kbd>P</kbd> pause/resume game<br />
+          </div>
+          <div style={buttonContainerStyle}>
+          <button style={buttonStyle} onClick={this.moveLeft}>←</button>
+          <button style={buttonStyle} onClick={this.moveRight}>→</button>
+          <button style={buttonStyle} onClick={this.rotateBlock}>Rotate</button>
+          <button style={buttonStyle} onClick={this.dropBlock}>Drop</button>
+            <button style={buttonStyle} onClick={this.moveDown}>↓</button>
           </div>
         </div>
       </div>

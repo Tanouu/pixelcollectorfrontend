@@ -11,17 +11,17 @@ class Board extends Component {
       return <div>no board</div>;
     }
     return (
-      <div className="Board" style={styles.board}>
-        <Paused />
-        <GameOver />
-        {this.props.board.current.map((row, rowIndex) => (
-          <Row
-            row={row}
-            rowIndex={rowIndex}
-            key={`row-${rowIndex}`}
-          />
-        ))}
-      </div>
+        <div className="Board" style={styles.board}>
+          <Paused />
+          <GameOver />
+          {this.props.board.current.map((row, rowIndex) => (
+              <Row
+                  row={row}
+                  rowIndex={rowIndex}
+                  key={`row-${rowIndex}`}
+              />
+          ))}
+        </div>
     );
   }
 }
@@ -33,13 +33,14 @@ const mapStateToProps = state => {
 }
 
 export default connect(
-  mapStateToProps,
-  null,
+    mapStateToProps,
+    null,
 )(Board);
 
 const styles = {
   board: {
     textAlign: 'center',
     float: 'left',
+    position: 'relative', // Ajoutez cette ligne
   },
 };
