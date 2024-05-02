@@ -91,7 +91,7 @@ function Header() {
                         {isLoggedIn ? (
                             <>
                                 <Nav.Link as={Link} to="/game" className="nav-link-hover">Jeu</Nav.Link>
-                                <Nav.Link className="nav-link-hover">Enchères</Nav.Link>
+                                <Nav.Link as={Link} to="/auctions" className="nav-link-hover">Enchères</Nav.Link>
                                 <Nav.Link as={Link} to="/" className="nav-link-hover">MarketPlace</Nav.Link>
                                 <Nav.Link as={Link} to="/collection" className="nav-link-hover">Collection</Nav.Link>
                                 <Nav.Link as={Link} to="/profile" className="nav-link-hover">Profil</Nav.Link>

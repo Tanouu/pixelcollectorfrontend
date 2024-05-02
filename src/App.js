@@ -9,6 +9,7 @@ import Marketplace from "./components/MarketPlace";
 import Profile from "./components/Profile";
 import Collection from "./components/Collection";
 import PixelCollectorGame from "../src/PixelCollectorGame/PixelCollectorGame";
+import Auctions from "./components/Auctions";
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
           <Route path="/login" element={<LoginForm />} />
           <Route path="/collection" element={<Collection />} />
             <Route path="/game" element={<PixelCollectorGame />} />
+            <Route path="/auctions" element={<Auctions />} />
 
         </Routes>
       </div>

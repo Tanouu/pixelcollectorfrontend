@@ -1,27 +1,26 @@
-import React from 'react';
-
 export default ({ cell }) => {
   const style = cell ? styles.color(cell) : styles.emptyCell;
   return (
-      <div className="Cell" style={{...styles.cell, ...style }} />
+      <div className="Cell" style={{ ...styles.cell, ...style }} />
   );
 }
 
 const colors = [
-  [0, 0, 139],    // darkblue
-  [220, 20, 60],  // crimson
-  [50, 205, 50],  // limegreen
-  [139, 0, 139],  // darkmagenta
-  [255, 140, 0],  // darkorange
-  [0, 139, 139],  // cyan
-  [255, 20, 147]  // deeppink
+  [190, 0, 253],    // Purple
+  [253, 253, 0],  // Yellow
+  [0, 253, 0],  // Green
+  [139, 0, 139],  // Dark Magenta
+  [253, 179, 0],  // Orange
+  [253, 0, 6],  // Red
+  [0, 253, 253]  // Cyan
 ];
 
 const styles = {
   cell: {
     width: '25px',
     height: '25px',
-    float: 'left',
+    display: 'inline-block',
+    verticalAlign: 'top',
   },
   emptyCell: {
     border: '1px solid #ddd',
@@ -29,14 +28,17 @@ const styles = {
   },
   color: cell => {
     const color = colors[cell - 1];
+    const rgbaColor = `rgba(${color[0]}, ${color[1]}, ${color[2]}, 0.8)`;
     return {
-      backgroundColor: `rgba(${color.join(',')}, 0.8)`,
-      border: '3px solid',
-      borderBottomColor: `rgba(${color.join(',')}, 0.1)`,
-      borderRightColor: `rgba(${color.join(',')}, 1)`,
-      borderTopColor: `rgba(${color.join(',')}, 1)`,
-      borderLeftColor: `rgba(${color.join(',')}, 0.3)`,
-      boxShadow: 'inset 0px 0px 0px 1px rgba(255,255,255,0.5)',
+      backgroundColor: rgbaColor,
+      border: '4px solid',
+      borderBottomColor: `linear-gradient(45deg, rgba(${color[0]}, ${color[1]}, ${color[2]}, 0.1), rgba(${color[0]}, ${color[1]}, ${color[2]}, 0.4))`,
+      borderRightColor: `linear-gradient(135deg, rgba(${color[0]}, ${color[1]}, ${color[2]}, 0.3), rgba(${color[0]}, ${color[1]}, ${color[2]}, 0.6))`,
+      borderTopColor: `rgba(${color[0]}, ${color[1]}, ${color[2]}, 0.6)`,
+      borderLeftColor: `linear-gradient(225deg, rgba(${color[0]}, ${color[1]}, ${color[2]}, 0.3), rgba(${color[0]}, ${color[1]}, ${color[2]}, 0.6))`,
+      boxShadow: `inset 0 0 4px rgba(0,0,0,0.4)`
     }
   }
-};
+  };
+
+
