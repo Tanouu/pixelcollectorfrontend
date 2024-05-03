@@ -70,6 +70,12 @@ class App extends Component {
     event.preventDefault();
     alert(event);
   }
+
+
+  componentDidMount() {
+    // Disable scrolling on the body when the game component is mounted
+    document.body.style.overflow = 'hidden';
+  }
   render() {
     return (
       <div className="App" style={appStyle}>
